@@ -1,25 +1,27 @@
+#Class Node is a class representing the nodes/vertices in a graph.
+
 class Node:
 	def __init__(self, index):
-		self.index = index
+		self.index = index #integer indicating the index of the vertex
 		self.out_edge_dic = {} #dictionary of pointers to out_edges, indexed by the string "out:out_vertex_index, in:in_vertex_index"
 		self.in_edge_dic = {} #dictionary of pointers to in_edges, indexed by the string "out:out_vertex_index, in:in_vertex_index"
 
-	def add_in_edge(self, an_edge):
+	def add_in_edge(self, an_edge): #add the edge pointer to in_edge_dic
 		edge_id_str = edge_id_builder(an_edge.out_vertex_id, an_edge.in_vertex_id)
 		self.in_edge_dic[edge_id_str] = an_edge
 
-	def add_out_edge(self, an_edge):
+	def add_out_edge(self, an_edge): #add the edge pointer to out_edge_dic
 		edge_id_str = edge_id_builder(an_edge.out_vertex_id, an_edge.in_vertex_id)
 		self.out_edge_dic[edge_id_str] = an_edge
 
-	def find_edge_to(self, in_vertex_id):
+	def find_edge_to(self, in_vertex_id): # returns pointer to an edge
 		search_str = edge_id_builder(self.index, in_vertex_id)
 		try:
 			return self.out_edge_dic[search_str]
 		except:
 			return None
 
-	def find_edge_from(self, out_vertex_id):
+	def find_edge_from(self, out_vertex_id): # returns pointer to an edge
 		search_str = edge_id_builder(out_vertex_id, self.index)
 		try:
 			return self.in_edge_dic[search_str]
@@ -27,22 +29,24 @@ class Node:
 			return None		
 
 
+#Class Node is a class representing the edges in a graph. 
+
 class Edge:
 	def __init__(self, out_vertex_id, in_vertex_id, edge_cost = None):
 		self.out_vertex_id = out_vertex_id
 		self.in_vertex_id = in_vertex_id
 		self.edge_cost = edge_cost
 
-	def get_out_vertex_id(self):
+	def get_out_vertex_id(self): #return the index of the out_vertex
 		return self.out_vertex_id
 
-	def get_in_vertex_id(self):
+	def get_in_vertex_id(self): #return the index of the in_vertex
 		return self.in_vertex_id
 
-	def get_edge_cost(self):
+	def get_edge_cost(self): #return the edge_cost
 		return self.edge_cost
 
-	def set_edge_cost(self, new_edge_cost):
+	def set_edge_cost(self, new_edge_cost): #set the edge_cost
 		self.edge_cost = new_edge_cost
 
 
@@ -58,7 +62,7 @@ class Graph:
 		self.num_vertices = 0
 		self.num_edges = 0
 
-	def add_vertex(self, vertex_id):
+	def add_vertex(self, vertex_id): #create a new node object and add a pointer to the object ot vertex_dic
 		new_vertex = Node(vertex_id)
 		self.vertex_dic[vertex_id] = new_vertex
 		self.num_vertices += 1
@@ -103,6 +107,8 @@ class Graph:
 		print("Graph Built. " + "Number of vertices:" + str(len(self.vertex_dic))+ "; Number of edges:" + str(len(self.edge_dic)))
 
 
+#SparseMatrix which stores the entries in a matrix in a hashmap;
+#This is expected to be more efficient than the DenseMatrix implementation for sparse matrices.
 class SparseMatrix:
 	def __init__(self):
 		self.data = {}
@@ -130,7 +136,8 @@ class SparseMatrix:
 
 		return index_str
 
-
+#DenseMatrix which stores the entries in a matrix in an array; 
+#This is expected to be more efficient than the SparseMatrix implementation for dense matrices.
 class DenseMatrix:
 	def __init__(self, i_size, j_size):
 		self.i_size = i_size

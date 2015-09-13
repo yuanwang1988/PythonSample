@@ -1,7 +1,10 @@
 from GraphClasses import Node, Edge, Graph, SparseMatrix, DenseMatrix
 
+#This function takes a graph G and computes the shortest path between every pair of vertices in G
+#using the Floyd-Warshall algorithm
 def FloydWarshall(a_graph):
 	num_of_vertices = a_graph.num_vertices
+	#Initialize the subsolution of the shortest paths between every pair of vertices in G that contains 0 internal vertices
 	subsol_0 = DenseMatrix(num_of_vertices, num_of_vertices)
 
 	for vertex_a_id in a_graph.vertex_dic:
@@ -18,6 +21,8 @@ def FloydWarshall(a_graph):
 
 	subsol_k = subsol_0
 
+	#Iteratively, using the subsolution of the shortest paths between every pair of vertices in G that contains only v1, v2, ... vk-1,
+	#find the subsolution of the shortest paths between very pair of vertices in G that contains only v1, v2, ... vk-1, vk
 	for k in range(1, len(a_graph.vertex_dic)):
 		subsol_kminus1 = subsol_k
 		subsol_k = FloydWarshall_itr(a_graph, k, subsol_kminus1)
