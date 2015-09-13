@@ -20,7 +20,7 @@ for line in f:
 
 	graph_a.add_edge(new_edge_out_vertex_id, new_edge_in_vertex_id, new_edge_cost)
 
-#run Bellman-Ford Algorithm on the graph
+#run Floyd-Warshall Algorithm on the graph
 cProfile.run('result = FloydWarshall(graph_a)')
 
 print(min(result.data))
